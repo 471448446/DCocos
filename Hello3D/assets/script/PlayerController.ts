@@ -1,11 +1,16 @@
-import { _decorator, AnimationComponent, Component, EventMouse, Input, input, Node, Vec3 } from 'cc';
+import { _decorator, AnimationComponent, Component, EventMouse, Input, input, Node, SkeletalAnimation, Vec3 } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('PlayerController')
 export class PlayerController extends Component {
 
-    @property({ type: AnimationComponent })
-    public BodyAnim: AnimationComponent | null = null;
+    // @property({ type: AnimationComponent })
+    // public BodyAnim: AnimationComponent | null = null;
+    /**
+     * 官方给的另外一种动画。
+     */
+    @property({ type: SkeletalAnimation })
+    public CocosAnim: SkeletalAnimation | null = null;
 
     //跳跃是一个完整的步骤，当这个步骤没有完成时，我们不接受任何输入，因此我们也通过 _startJump 来跳过跳跃过程中的用户输入。
     // 是否接收到跳跃指令
@@ -76,28 +81,45 @@ export class PlayerController extends Component {
         this._curJumpTime = 0; // 重置下跳跃的时间
 
         //以动画得时间作为跳跃的时间
-        const clipName = step == 1 ? 'OneStep' : 'TwoStep';
-        const state = this.BodyAnim.getState(clipName);
-        this._jumpTime = state.duration;
+        // const clipName = step == 1 ? 'OneStep' : 'TwoStep';
+        // const state = this.BodyAnim.getState(clipName);
+        // this._jumpTime = state.duration;
+
+        if (this.CocosAnim) {
+            const state = this.CocosAnim.getState('cocos_anim_jump');
+            this._jumpTime = 0.3;
+        }
+
 
         this._curJumpSpeed = this._jumpStep / this._jumpTime; // 计算跳跃的速度
         this.node.getPosition(this._curPos); // 获取角色当前的位置
         // 目标位置 = 当前位置 + 步长
         Vec3.add(this._targetPos, this._curPos, new Vec3(this._jumpStep, 0, 0));
-        if (this.BodyAnim) {
-            if (step === 1) {
-                this.BodyAnim.play('OneStep');
-            } else if (step === 2) {
-                this.BodyAnim.play('TwoStep');
-            }
+        // 默认的动画
+        // if (this.BodyAnim) {
+        //     if (step === 1) {
+        //         this.BodyAnim.play('OneStep');
+        //     } else if (step === 2) {
+        //         this.BodyAnim.play('TwoStep');
+        //     }
+        // }
+        // 新的动画
+        if (this.CocosAnim) {
+            this.CocosAnim.getState('cocos_anim_jump').speed = 3.5; // 跳跃动画时间比较长，这里加速播放
+            this.CocosAnim.play('cocos_anim_jump'); // 播放跳跃动画
         }
+
         // 增加步数
         this._curMoveIndex += step;
     }
 
     private notifyStepChange() {
         this.node.emit("StepNumber", this._curMoveIndex);
+        if (this.CocosAnim) {
+            this.CocosAnim.play('cocos_anim_idle');
+        }
     }
+
 }
 
 

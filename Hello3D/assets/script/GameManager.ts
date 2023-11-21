@@ -97,7 +97,7 @@ export class GameManager extends Component {
         } else if (this.blockList[index] == BlockType.NONE) {
             this.gameState(GameState.GS_END);
         }
-
+        console.log("step:" + index);
     }
 }
 
