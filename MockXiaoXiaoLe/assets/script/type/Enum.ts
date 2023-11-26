@@ -27,3 +27,14 @@ export enum SlidDirection {
     Left, // 左
     Right, // 右
 }
+ 
+/**
+ * 组合类型
+ */
+export enum CombinationType {
+    Horizontal = 1, // 横型
+    Vertical, // 竖型
+    Cross, // 十字型
+    TShape, // T 型
+    LShape, // L 型
+}

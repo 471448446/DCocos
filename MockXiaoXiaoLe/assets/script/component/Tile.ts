@@ -52,7 +52,7 @@ export default class Tile extends Component {
      */
     private onTouchStart(e: EventTouch) {
         GameEvent.emit(TileEvent.TouchStart, this._coord.copy(), e.getLocation());
-        console.log("send onTouchStart()" + this._coord + "," + e.getLocation());
+        // console.log("send onTouchStart()" + this._coord + "," + e.getLocation());
     }
 
     /**
@@ -169,7 +169,11 @@ export default class Tile extends Component {
         tween(this.node)
             // .to(0.1, { scale: 0 })
             .to(0.1, { scale: new Vec3(0, 0, 1) })
-            .call(() => PoolManager.put(this.node))
+            .call(() => {
+                // this.node.parent.removeChild(this.node);
+                PoolManager.put(this.node);
+                console.log("回收："+this._coord);
+            })
             .start();
     }
 
