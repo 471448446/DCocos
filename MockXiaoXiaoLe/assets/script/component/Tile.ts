@@ -25,11 +25,11 @@ export default class Tile extends Component {
      */
     public get coord() { return this._coord; }
 
-     onLoad() {
+    onLoad() {
         this.bindTouchEvents();
     }
 
-     onDestroy() {
+    onDestroy() {
         this.unbindTouchEvents();
     }
 
@@ -51,7 +51,7 @@ export default class Tile extends Component {
      * @param e 参数
      */
     private onTouchStart(e: EventTouch) {
-        // GameEvent.emit(TileEvent.TouchStart, this._coord.copy(), e.getLocation());
+        GameEvent.emit(TileEvent.TouchStart, this._coord.copy(), e.getLocation());
         console.log("send onTouchStart()" + this._coord + "," + e.getLocation());
     }
 
@@ -119,7 +119,7 @@ export default class Tile extends Component {
         this.sprite.spriteFrame = null;
         this.setCoord(-1, -1);
         // this.node.setScale(0);
-        // this.node.setScale(new Vec3(0, 0, 0));
+        this.node.setScale(new Vec3(0, 0, 0));
     }
 
     /**
@@ -153,12 +153,13 @@ export default class Tile extends Component {
      * 显示方块
      */
     public appear() {
-        // tween(this.node)
-        //     // .to(0.075, { scale: 1.1 })
-        //     // .to(0.025, { scale: 1 })
-        //     .to(0.075, { scale: new Vec3(1.1, 1.1, 0) })
-        //     .to(0.025, { scale: new Vec3(1, 1, 0) })
-        //     .start();
+        tween(this.node)
+            // .to(0.075, { scale: 1.1 })
+            // .to(0.025, { scale: 1 })
+            // 注意这里z轴不要缩放，是1。shit
+            .to(0.075, { scale: new Vec3(1.1, 1.1, 1) })
+            .to(0.025, { scale: new Vec3(1, 1, 1) })
+            .start();
     }
 
     /**
@@ -167,7 +168,7 @@ export default class Tile extends Component {
     public disappear() {
         tween(this.node)
             // .to(0.1, { scale: 0 })
-            .to(0.1, { scale: new Vec3(0, 0, 0) })
+            .to(0.1, { scale: new Vec3(0, 0, 1) })
             .call(() => PoolManager.put(this.node))
             .start();
     }
