@@ -60,13 +60,14 @@ export default class TileManager extends Component {
      */
     private generateInitTypeMap() {
         this.typeMap = [];
-        for (let c = 0; c < GameConfig.col; c++) {
-            let colSet: TileType[] = [];
-            for (let r = 0; r < GameConfig.row; r++) {
-                colSet.push(GameUtil.getRandomType());
-            }
-            this.typeMap.push(colSet);
-        }
+        // for (let c = 0; c < GameConfig.col; c++) {
+        //     let colSet: TileType[] = [];
+        //     for (let r = 0; r < GameConfig.row; r++) {
+        //         colSet.push(GameUtil.getRandomType());
+        //     }
+        //     this.typeMap.push(colSet);
+        // }
+        this.typeMap = GameUtil.getInitTypeMap();
         if (!GameUtil.hasValidCombo(this.typeMap)) {
             this.typeMap = GameUtil.getInitTypeMap();
         }

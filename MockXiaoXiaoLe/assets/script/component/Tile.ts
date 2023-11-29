@@ -170,7 +170,7 @@ export default class Tile extends Component {
             // .to(0.1, { scale: 0 })
             .to(0.1, { scale: new Vec3(0, 0, 1) })
             .call(() => {
-                // this.node.parent.removeChild(this.node);
+                this.node.parent.removeChild(this.node);
                 PoolManager.put(this.node);
                 console.log("回收："+this._coord);
             })

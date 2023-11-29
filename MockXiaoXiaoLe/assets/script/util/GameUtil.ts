@@ -176,6 +176,29 @@ export default class GameUtil {
     /**
      * 是否有可一步消除的组合
      */
+    // public static hasValidCombo(map: TileType[][]) {
+    //     try {
+    //         return this.hasValidCombo2(map);
+    //     }
+    //     catch (e) {
+    //         for (let r = 0; r < GameConfig.row; r++) {
+    //             for (let c = 0; c < GameConfig.col; c++) {
+    //                 if (map.length > c) {
+    //                     if (map[c].length > r) {
+
+    //                     } else {
+    //                         console.log("shit no colum:" + c + ", row:" + r);
+    //                         break;
+    //                     }
+    //                 } else {
+    //                     console.log("shit no colum:" + c);
+    //                     break;
+    //                 }
+    //             }
+    //         }
+    //         return false;
+    //     }
+    // }
     public static hasValidCombo(map: TileType[][]) {
         for (let r = 0; r < GameConfig.row; r++) {
             for (let c = 0; c < GameConfig.col; c++) {
