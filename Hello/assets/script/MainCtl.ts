@@ -1,31 +1,34 @@
-import { _decorator, Component, director, Director, Node } from 'cc';
+import { _decorator, Component, director, Input, instantiate, Label, Layout, Node, Prefab } from 'cc';
 const { ccclass, property } = _decorator;
 
-@ccclass('main')
-export class Main extends Component {
+@ccclass('MainCtl')
+export class MainCtl extends Component {
+    @property(Node)
+    listLayout: Node;
+
+    @property(Prefab)
+    buttonEntrance: Prefab;
+
     start() {
-        console.log("main start()");
-    }
-    protected onLoad(): void {
-        console.log("main onLoad()");
-    }
-    protected onDestroy(): void {
-        console.log("main onDestroy()");
-    }
-    protected onDisable(): void {
-        console.log("main onDisable()");
-    }
-    protected onEnable(): void {
-        console.log("main onEnable()");
-    }
-    protected onRestore(): void {
-        console.log("main onRestore()");
-    }
-    onFocusInEditor(): void {
-        console.log("main onFocusInEditor()");
-    }
-    onLostFocusInEditor(): void {
-        console.log("main onLostFocusInEditor()");
+        for (const demo of listDemons) {
+            // 实例化预制体
+            const buttonUi = instantiate(this.buttonEntrance);
+            // 获取预制体的node 。这里只有一个child，所以可以使用 buttonUi.children[0]
+            const labelNoe: Node = buttonUi.getChildByName("Label");
+            // 通过node获取组件
+            const label = labelNoe.getComponent(Label);
+            // 设置组件的信息
+            label.string = demo.name;
+            // 添加node
+            this.listLayout.addChild(buttonUi);
+            buttonUi.on(Input.EventType.TOUCH_END, () => {
+                director.loadScene(demo.scene);
+            }, this);
+            /** 
+            * 为实例化后的预制体添加脚本组件
+            * newPrefab.addComponent(PrefabClickHandler);
+            */
+        }
     }
 
     update(deltaTime: number) {
@@ -35,6 +38,14 @@ export class Main extends Component {
     goToCoordScence() {
         director.loadScene("scene/CoordAnchor");
     }
+}
+const listDemons: Demo[] = [
+    { name: "天空盒", scene: "Skybox" },
+]
+
+interface Demo {
+    name: string;
+    scene: string;
 }
 
 
