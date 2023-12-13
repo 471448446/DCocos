@@ -2,16 +2,16 @@
   "ver": "1.0.26",
   "importer": "image",
   "imported": true,
-  "uuid": "9781a950-c7e5-4332-a5a5-8264925d0b5e",
+  "uuid": "a7741aed-1f06-4468-b70c-68c19759cfcb",
   "files": [
-    ".jpg",
-    ".json"
+    ".json",
+    ".png"
   ],
   "subMetas": {
     "b47c0": {
       "importer": "erp-texture-cube",
-      "uuid": "9781a950-c7e5-4332-a5a5-8264925d0b5e@b47c0",
-      "displayName": "test",
+      "uuid": "a7741aed-1f06-4468-b70c-68c19759cfcb@b47c0",
+      "displayName": "skybox_meadow_2_1k",
       "id": "b47c0",
       "name": "textureCube",
       "userData": {
@@ -20,10 +20,9 @@
         "minfilter": "linear",
         "magfilter": "linear",
         "mipfilter": "linear",
-        "anisotropy": 1,
-        "isRGBE": false,
-        "imageDatabaseUri": "9781a950-c7e5-4332-a5a5-8264925d0b5e",
-        "mipBakeMode": 1
+        "anisotropy": 0,
+        "isRGBE": true,
+        "imageDatabaseUri": "a7741aed-1f06-4468-b70c-68c19759cfcb"
       },
       "ver": "1.0.10",
       "imported": true,
@@ -33,7 +32,7 @@
       "subMetas": {
         "74afd": {
           "importer": "texture-cube-face",
-          "uuid": "9781a950-c7e5-4332-a5a5-8264925d0b5e@b47c0@74afd",
+          "uuid": "a7741aed-1f06-4468-b70c-68c19759cfcb@b47c0@74afd",
           "displayName": "",
           "id": "74afd",
           "name": "right",
@@ -41,14 +40,14 @@
           "ver": "1.0.0",
           "imported": true,
           "files": [
-            ".jpg",
-            ".json"
+            ".json",
+            ".png"
           ],
           "subMetas": {}
         },
         "8fd34": {
           "importer": "texture-cube-face",
-          "uuid": "9781a950-c7e5-4332-a5a5-8264925d0b5e@b47c0@8fd34",
+          "uuid": "a7741aed-1f06-4468-b70c-68c19759cfcb@b47c0@8fd34",
           "displayName": "",
           "id": "8fd34",
           "name": "left",
@@ -56,14 +55,14 @@
           "ver": "1.0.0",
           "imported": true,
           "files": [
-            ".jpg",
-            ".json"
+            ".json",
+            ".png"
           ],
           "subMetas": {}
         },
         "bb97f": {
           "importer": "texture-cube-face",
-          "uuid": "9781a950-c7e5-4332-a5a5-8264925d0b5e@b47c0@bb97f",
+          "uuid": "a7741aed-1f06-4468-b70c-68c19759cfcb@b47c0@bb97f",
           "displayName": "",
           "id": "bb97f",
           "name": "top",
@@ -71,14 +70,14 @@
           "ver": "1.0.0",
           "imported": true,
           "files": [
-            ".jpg",
-            ".json"
+            ".json",
+            ".png"
           ],
           "subMetas": {}
         },
         "7d38f": {
           "importer": "texture-cube-face",
-          "uuid": "9781a950-c7e5-4332-a5a5-8264925d0b5e@b47c0@7d38f",
+          "uuid": "a7741aed-1f06-4468-b70c-68c19759cfcb@b47c0@7d38f",
           "displayName": "",
           "id": "7d38f",
           "name": "bottom",
@@ -86,14 +85,14 @@
           "ver": "1.0.0",
           "imported": true,
           "files": [
-            ".jpg",
-            ".json"
+            ".json",
+            ".png"
           ],
           "subMetas": {}
         },
         "e9a6d": {
           "importer": "texture-cube-face",
-          "uuid": "9781a950-c7e5-4332-a5a5-8264925d0b5e@b47c0@e9a6d",
+          "uuid": "a7741aed-1f06-4468-b70c-68c19759cfcb@b47c0@e9a6d",
           "displayName": "",
           "id": "e9a6d",
           "name": "front",
@@ -101,14 +100,14 @@
           "ver": "1.0.0",
           "imported": true,
           "files": [
-            ".jpg",
-            ".json"
+            ".json",
+            ".png"
           ],
           "subMetas": {}
         },
         "40c10": {
           "importer": "texture-cube-face",
-          "uuid": "9781a950-c7e5-4332-a5a5-8264925d0b5e@b47c0@40c10",
+          "uuid": "a7741aed-1f06-4468-b70c-68c19759cfcb@b47c0@40c10",
           "displayName": "",
           "id": "40c10",
           "name": "back",
@@ -116,8 +115,8 @@
           "ver": "1.0.0",
           "imported": true,
           "files": [
-            ".jpg",
-            ".json"
+            ".json",
+            ".png"
           ],
           "subMetas": {}
         }
@@ -126,12 +125,9 @@
   },
   "userData": {
     "type": "texture cube",
-    "hasAlpha": false,
     "fixAlphaTransparencyArtifacts": false,
-    "redirect": "9781a950-c7e5-4332-a5a5-8264925d0b5e@b47c0",
-    "flipVertical": false,
-    "compressSettings": {
-      "useCompressTexture": false
-    }
+    "isRGBE": true,
+    "hasAlpha": true,
+    "redirect": "a7741aed-1f06-4468-b70c-68c19759cfcb@b47c0"
   }
 }

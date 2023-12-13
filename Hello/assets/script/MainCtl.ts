@@ -40,7 +40,11 @@ export class MainCtl extends Component {
     }
 }
 const listDemons: Demo[] = [
-    { name: "天空盒", scene: "Skybox" },
+    { name: "天空盒jpg", scene: "SkyBox" },
+    { name: "天空盒hdr", scene: "SkyBox2" },
+    { name: "天空盒cubemap", scene: "SkyBox3" },
+    { name: "天空盒代码加载", scene: "SkyBox4" },
+    { name: "立方体贴图", scene: "CubeMap" },
 ]
 
 interface Demo {
