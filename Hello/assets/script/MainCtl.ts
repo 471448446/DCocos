@@ -45,6 +45,7 @@ const listDemons: Demo[] = [
     { name: "天空盒cubemap", scene: "SkyBox3" },
     { name: "天空盒代码加载", scene: "SkyBox4" },
     { name: "立方体贴图", scene: "CubeMap" },
+    { name: "精灵帧动画", scene: "SpriteAnimation" },
 ]
 
 interface Demo {
