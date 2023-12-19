@@ -46,6 +46,10 @@ const listDemons: Demo[] = [
     { name: "天空盒代码加载", scene: "SkyBox4" },
     { name: "立方体贴图", scene: "CubeMap" },
     { name: "精灵帧动画", scene: "SpriteAnimation" },
+    //https://docs.cocos.com/creator/manual/zh/ui-system/components/engine/widget-align.html
+    { name: "UI-Widget", scene: "UiWidget" },
+    //https://docs.cocos.com/creator/manual/zh/ui-system/components/engine/sliced-sprite.html
+    { name: "UI-图片缩放", scene: "UiSpriteScale" },
 ]
 
 interface Demo {
