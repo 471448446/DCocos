@@ -2,7 +2,7 @@ import { _decorator, BoxCollider2D, Collider2D, Component, Contact2DType, direct
 const { ccclass, property } = _decorator;
 
 /**
- * 这里没有用预制体！！！
+ * 
  */
 @ccclass('Physical2DRigeBodyTest_Ball')
 export class Physical2DRigeBodyTest_Ball extends Component {
@@ -14,7 +14,7 @@ export class Physical2DRigeBodyTest_Ball extends Component {
         const sizeForm = this.node.getComponent(UITransform);
         this.collider.size.width = sizeForm.width;
         this.collider.size.height = sizeForm.height;
-        console.log(this.node.name + "墙壁大小:" + sizeForm.width + "," + sizeForm.height + ",碰撞体：" + this.collider.size.width + "," + this.collider.size.height);
+        // console.log(this.node.name + "墙壁大小:" + sizeForm.width + "," + sizeForm.height + ",碰撞体：" + this.collider.size.width + "," + this.collider.size.height);
 
     }
 
