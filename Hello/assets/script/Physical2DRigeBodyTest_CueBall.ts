@@ -1,4 +1,4 @@
-import { _decorator, CCFloat, CCInteger, Collider2D, Component, EventTouch, Input, Label, Mask, math, Node, Prefab, RigidBody, RigidBody2D, UITransform, v2, v3, Vec2 } from 'cc';
+import { _decorator, CCFloat, CCInteger, Collider2D, Component, EventTouch, Input, Label, Mask, math, Node, Prefab, RigidBody, RigidBody2D, tween, UITransform, v2, v3, Vec2 } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('Physical2DRigeBodyTest_CueBall')
@@ -8,7 +8,7 @@ export class Physical2DRigeBodyTest_CueBall extends Component {
     whiteBallNode: Node;
     // 球杆提示
     @property(Node)
-    cueHandleNode: Node;
+    cueRootNode: Node;
     // 球杆
     @property(Node)
     cueNode: Node;
@@ -26,12 +26,8 @@ export class Physical2DRigeBodyTest_CueBall extends Component {
     @property(Vec2)
     offsetCueNumber: Vec2 = v2(0, 0);
 
-
-    private touchStartPoint: Vec2;
-    /**
-     * 是否在拉杆的模式
-     */
-    private enableDrag: boolean;
+    // 人家触摸类里面记录了
+    // private touchStartPoint: Vec2;
 
     start() {
         this.whiteBallNode.on(Input.EventType.TOUCH_START, this.onTouchStart, this);
@@ -40,47 +36,33 @@ export class Physical2DRigeBodyTest_CueBall extends Component {
         //https://forum.cocos.org/t/topic/139987/2
         this.whiteBallNode.on(Input.EventType.TOUCH_CANCEL, this.onTouchEnd, this);
         // 不展示
-        this.cueHandleNode.active = false;
+        this.cueRootNode.active = false;
         // console.log("节点大小"+this.node.getComponent(UITransform).contentSize);
     }
 
     protected onDestroy(): void {
-        this.whiteBallNode.off(Input.EventType.TOUCH_START, this.onTouchStart, this);
-        this.whiteBallNode.off(Input.EventType.TOUCH_MOVE, this.onTouchMove, this);
-        this.whiteBallNode.off(Input.EventType.TOUCH_END, this.onTouchEnd, this);
-        this.whiteBallNode.off(Input.EventType.TOUCH_CANCEL, this.onTouchEnd, this);
+        // 此时whiteBallNode已经获取不到了
+        // this.whiteBallNode.off(Input.EventType.TOUCH_START, this.onTouchStart, this);
+        // this.whiteBallNode.off(Input.EventType.TOUCH_MOVE, this.onTouchMove, this);
+        // this.whiteBallNode.off(Input.EventType.TOUCH_END, this.onTouchEnd, this);
+        // this.whiteBallNode.off(Input.EventType.TOUCH_CANCEL, this.onTouchEnd, this);
     }
 
     update(deltaTime: number) {
 
     }
 
-    onTouchStartParent(ev: EventTouch) {
-        console.log("父节点按下位置：" + this.touchStartPoint);
-    }
-
     onTouchStart(ev: EventTouch) {
-        // ev.propagationStopped = true;
-        this.enableDrag = true;
-        this.touchStartPoint = ev.getUILocation();
         // 设置提示UI的位置，因为他们在一个节点下，并且偏移量是0
-        this.cueHandleNode.position = this.whiteBallNode.position;
-        console.log("按下位置：" + this.touchStartPoint);
+        this.cueRootNode.position = this.whiteBallNode.position;
+        console.log("按下位置：" + ev.getLocation());
     }
 
     onTouchMove(ev: EventTouch) {
-        if (!this.enableDrag) {
-            return;
-        }
-        this.refreshTile(ev.getUILocation());
+        this.refreshTile(ev);
     }
 
     onTouchEnd(ev: EventTouch) {
-        const isDrag = this.enableDrag;
-        this.enableDrag = false;
-        if (!isDrag) {
-            return;
-        }
         /**
          * 这里一定要注意，触摸事件的分发规则，如果节点的大小太小，如果触摸到节点的外面了，是无法收到触摸结束事件的！！
          * 这里跟Android不一样，在Android中，只要知道了事件接受者了，我滑到哪，都可以接受到结束事件。
@@ -93,68 +75,86 @@ export class Physical2DRigeBodyTest_CueBall extends Component {
          * 
          */
 
-        console.log("抬起位置：" + ev.getUILocation());
-        this.refreshTile(ev.getUILocation(), true);
+        console.log("抬起位置：" + ev.getLocation());
+        this.refreshTile(ev, true);
 
     }
 
-    private refreshTile(p2: Vec2, shoot: boolean = false) {
-        const distance = Math.round(this.getDistance(this.touchStartPoint, p2));
-        const force = Math.round(distance * this.scaleForce);
-        const angle = Math.round(this.getAngle(this.touchStartPoint, p2) * 100) / 100;
-
-        if (!this.cueHandleNode.active) {
-            this.cueHandleNode.active = true;
+    private refreshTile(ev: EventTouch, shoot: boolean = false) {
+        if (!this.cueRootNode.active) {
+            this.cueRootNode.active = true;
         }
 
+        const p1 = ev.getStartLocation();
+        const p2 = ev.getLocation();
+        // 
+        const p2p1 = v2(p1.x - p2.x, p1.y - p2.y);
+        const angle = this.getAngleWithY(p2p1);
+
+        // console.log(
+        //     "v:" + p2p1 +
+        //     ",angle:" + angle
+        // );
+        // 保留小数点2位
+        const distance = Math.round(Math.sqrt(Math.pow(p2p1.x, 2) + Math.pow(p2p1.y, 2)) * 100) / 100;
+        const force = Math.round(distance * this.scaleForce * 100) / 100;
+        console.log(distance + "," + force);
+
         this.tileNumberNode.string = "力度：" + force;
+        // 这里只移动y轴，是因为，节点的坐标是y轴正方向是屏幕朝上
+        const cueDefaultPosition = v3(this.offsetCueNumber.x, this.offsetCueNumber.y, 0);
         const curPosition = v3(0, -distance, 0).add(
             v3(this.offsetCueNumber.x, this.offsetCueNumber.y, 0)
         )
         this.cueNode.position = curPosition;
-        this.cueHandleNode.angle = angle + 180;
-
+        /**  
+         * 节点的旋转是从y轴的正方向，正数，逆时针旋转。负数，顺时针旋转。
+         * 想想一下，如果力的方向是x轴正方向，此时angle为90，但是节点要旋转270。
+         */
+        this.cueRootNode.angle = 360 - angle;
         if (!shoot) {
             return;
         }
+        const moveBackY = cueDefaultPosition.y - curPosition.y;
+        // tween这个叫缓动，不是动画：https://docs.cocos.com/creator/manual/zh/tween/
+        tween(this.cueNode)
+            .by(0.8, { position: v3(0, moveBackY, 0) }, { easing: 'sineIn' })
+            .call(() => {
+                // 撞击声音
+                const forceX = Math.round(p2p1.x * this.scaleForce * 100) / 100;
+                const forceY = Math.round(p2p1.y * this.scaleForce * 100) / 100;
+                const rigidBody = this.whiteBallNode.getComponent(RigidBody2D);
+                //这里力的作用点是直接作用于质心。可以根据，起点和终点，的偏移量，对应的修改力的作用点。
+                rigidBody.applyForceToCenter(v2(forceX, forceY), true);
 
-        this.cueHandleNode.active = false;
-        this.cueHandleNode.angle = 0;
-        // 先将角度，转换成绕Y轴正方先顺时针旋转的角度
-        let useAngel = 0;
-        if (angle < 0) {
-            useAngel = -angle;
-        } else if (angle > 0) {
-            useAngel = 360 - angle;
-        }
-        console.log("dis:" + distance + ",force:" + force + ",夹角：" + angle + "," + useAngel);
-
-        const rigidBody = this.whiteBallNode.getComponent(RigidBody2D);
-        const forceX = Math.sin(useAngel) * force;
-        const forceY = Math.cos(useAngel) * force;
-        console.log("dis:" + distance + ",force:" + force +
-            ",angle：" + angle +
-            ",xForce:" + Math.round(forceX) + ",forceY:" + Math.round(forceY));
-
-        rigidBody.applyForceToCenter(v2(forceX, forceY), true);
+                this.cueRootNode.active = false;
+                this.cueRootNode.angle = 0;
+            })
+            .start();
     }
 
-    private getDistance(p1: Vec2, p2: Vec2): number {
-        const deltaPoint = v2(p1.x - p2.x, p1.y - p2.y);
-        return Math.sqrt(Math.pow(deltaPoint.x, 2) + Math.pow(deltaPoint.y, 2));
-    }
-    // 角度
-    private getAngle(p1: Vec2, p2: Vec2): number {
-        //向量p1->p2
-        let dir = v2(p2.x - p1.x, p2.y - p1.y);
-
-        //根据朝向计算出夹角弧度
-        let angle = dir.signAngle(v2(0, 1));
+    /**
+     * 逆时针为正
+     * @param vect 计算向量与y轴正方向的夹角
+     * @returns 
+     */
+    private getAngleWithY(vect: Vec2): number {
+        //根据朝向计算出夹角弧度。文档上说逆时针为正，顺时针为负。取值范围： (-PI, PI]
+        // 比如向量朝x正方向，值为正数90度。朝x轴负方向，值为负数-90度。
+        let angle = vect.signAngle(v2(0, 1));
 
         //将弧度转换为欧拉角
         let degree = angle / Math.PI * 180;
+        let result = 0;
+        // 统一成旋转一圈的角度，逆时针为正数。
+        if (degree > 0) {
+            result = degree;
+        } else if (degree < 0) {
+            result = 360 + degree;
+        }
+        // console.log("k:" + vect + "//" + degree + "/3/" + result);
 
-        return -degree
+        return Math.round(result * 100) / 100
     }
 
 }

@@ -50,6 +50,7 @@ const listDemons: Demo[] = [
     { name: "UI-Widget", scene: "UiWidget" },
     //https://docs.cocos.com/creator/manual/zh/ui-system/components/engine/sliced-sprite.html
     { name: "UI-图片缩放", scene: "UiSpriteScale" },
+    { name: "物理2D-击打小球", scene: "Physical2DRigeBodyTest" },
 ]
 
 interface Demo {
