@@ -126,6 +126,7 @@ export class Physical2DRigeBodyTest_CueBall extends Component {
                 const rigidBody = this.whiteBallNode.getComponent(RigidBody2D);
                 //这里力的作用点是直接作用于质心。可以根据，起点和终点，的偏移量，对应的修改力的作用点。
                 rigidBody.applyForceToCenter(v2(forceX, forceY), true);
+                // rigidBody.linearVelocity =  v2(forceX, forceY) ;
 
                 this.cueRootNode.active = false;
                 this.cueRootNode.angle = 0;
