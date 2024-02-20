@@ -50,7 +50,12 @@ const listDemons: Demo[] = [
     { name: "UI-Widget", scene: "UiWidget" },
     //https://docs.cocos.com/creator/manual/zh/ui-system/components/engine/sliced-sprite.html
     { name: "UI-图片缩放", scene: "UiSpriteScale" },
+    { name: "物理2D-运动", scene: "Physical2DTest" },
     { name: "物理2D-击打小球", scene: "Physical2DRigeBodyTest" },
+    // 3d刚体类型效果演示 https://docs.cocos.com/creator/manual/zh/physics/physics-rigidbody.html
+    { name: "物理3d-刚体类型", scene: "Phy3DRigideType" },
+    { name: "物理3d-质心位置", scene: "Phy3DRigideMass" },
+    { name: "物理3d-铰链约束", scene: "Phy3DHingeConstrant" },
 ]
 
 interface Demo {
