@@ -22,7 +22,7 @@ export class DemoButton extends Component {
         // 强制label渲染一次，获取宽高
         label.updateRenderData(true);
         buttonUiTransform.width = labelUiTransform.width + buttonLayout.paddingLeft + buttonLayout.paddingRight;
-        buttonUiTransform.height = labelUiTransform.height+buttonLayout.paddingTop + buttonLayout.paddingBottom;
+        buttonUiTransform.height = labelUiTransform.height + buttonLayout.paddingTop + buttonLayout.paddingBottom;        
     }
 
     update(deltaTime: number) {

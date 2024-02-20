@@ -1,4 +1,5 @@
 import { _decorator, Component, director, Input, instantiate, Label, Layout, Node, Prefab } from 'cc';
+import eventSource from './EventUtils';
 const { ccclass, property } = _decorator;
 
 @ccclass('MainCtl')
@@ -22,6 +23,9 @@ export class MainCtl extends Component {
             // 添加node
             this.listLayout.addChild(buttonUi);
             buttonUi.on(Input.EventType.TOUCH_END, () => {
+                // 获取当前node在父节点中的位置。因为这个按钮是添加在列表中，所以按钮在父节点中位置就是这里的index。
+                const indexInParent = buttonUi.getSiblingIndex();
+                eventSource.emit("clickEnterScene", indexInParent, demo.name);
                 director.loadScene(demo.scene);
             }, this);
             /** 
@@ -39,7 +43,7 @@ export class MainCtl extends Component {
         director.loadScene("scene/CoordAnchor");
     }
 }
-const listDemons: Demo[] = [
+export const listDemons: Demo[] = [
     { name: "天空盒jpg", scene: "SkyBox" },
     { name: "天空盒hdr", scene: "SkyBox2" },
     { name: "天空盒cubemap", scene: "SkyBox3" },
@@ -58,7 +62,7 @@ const listDemons: Demo[] = [
     { name: "物理3d-铰链约束", scene: "Phy3DHingeConstrant" },
 ]
 
-interface Demo {
+export interface Demo {
     name: string;
     scene: string;
 }

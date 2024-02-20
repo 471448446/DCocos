@@ -18,7 +18,7 @@ export class NavCloseCom extends Component {
         // https://github.com/cocos/cocos-engine/issues/2629
         // 尼玛，居然没有回退场景。
         // director.popScene();
-        director.loadScene("scene/Main");
+        director.loadScene("Main");
     }
 }
 
