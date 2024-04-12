@@ -8,5 +8,11 @@
       "fitWidth": true
     }
   },
-  "custom_joint_texture_layouts": []
+  "custom_joint_texture_layouts": [],
+  "layer": [
+    {
+      "name": "layer14",
+      "value": 16384
+    }
+  ]
 }

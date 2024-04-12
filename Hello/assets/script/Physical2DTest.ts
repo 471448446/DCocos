@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, RigidBody, RigidBody2D, UITransform, v2, Vec2 } from 'cc';
+import { _decorator, Component, director, game, Node, RigidBody, RigidBody2D, UITransform, v2, Vec2 } from 'cc';
 const { ccclass, property } = _decorator;
 
 /**
@@ -10,7 +10,7 @@ export class Physical2DTest extends Component {
 
 
     start() {
-
+        director.getPersistRootNode()
     }
 
     update(deltaTime: number) {

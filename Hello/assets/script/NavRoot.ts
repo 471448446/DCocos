@@ -3,6 +3,14 @@ import { Demo, listDemons } from './MainCtl';
 import eventSource from './EventUtils';
 const { ccclass, property } = _decorator;
 
+/**
+ * 常驻节点使用注意事项
+1、目标节点必须为位于层级的根节点，否则设置无效
+2、常驻节点是全局存在的，因此在使用时要注意避免滥用，合理规划和管理节点的数量和功能
+3、常驻节点中的资源和数据需要谨慎管理，避免内存泄漏和数据冗余
+4、常驻节点的生命周期与游戏运行的整个生命周期一致，当游戏退出时才会被销毁，因此需要确保在适当的时机进行资源释放和清理。
+总之，常驻节点是Cocos Creator中一种特殊的节点，它在游戏运行期间始终存在，并可以用于保存全局数据、管理全局功能以及在场景切换时保持节点状态。合理使用常驻节点可以提高开发效率和管理灵活性。
+ */
 @ccclass('NavRoot')
 export class NavRoot extends Component {
     /**
@@ -25,6 +33,7 @@ export class NavRoot extends Component {
      */
     @property(Node)
     titleNode: Node;
+
     private titleLable: Label;
 
     /**
@@ -43,6 +52,16 @@ export class NavRoot extends Component {
         this.updateSceneInfo(-1, "");
         // 这里不同节点间通信使用了事件，demo中是直接通过静态变量来访问。
         eventSource.on("clickEnterScene", this.onWatchClickEnterScene, this);
+    }
+
+    protected onEnable(): void {
+        console.log("导航栏 onEnable");
+        console.log(director.getScene());
+        this.updateSceneInfo(this.sceneIndex, this.sceneName);
+    }
+    
+    protected onDisable(): void {
+        console.log("导航栏 onDisable");
     }
 
     update(deltaTime: number) {
@@ -84,13 +103,18 @@ export class NavRoot extends Component {
     private updateSceneInfo(index: number, name: string) {
         this.sceneName = name;
         this.sceneIndex = index;
-
-        this.titleLable.string = name;
+        /**
+         * Label是在start()中初始化的。onEnable()早于start()
+         */
+        if (this.titleLable) {
+            this.titleLable.string = name;
+        }
 
         const notHomeScene = this.sceneIndex >= 0;
         this.preNode.active = notHomeScene;
         this.nextNode.active = notHomeScene;
         this.exitNode.active = notHomeScene;
+        console.log("导航栏可见？" + notHomeScene);
     }
 }
 

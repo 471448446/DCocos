@@ -1,4 +1,4 @@
-import { _decorator, Component, director, Input, instantiate, Label, Layout, Node, Prefab } from 'cc';
+import { _decorator, Component, director, Input, instantiate, Label, Layout, log, Node, Prefab } from 'cc';
 import eventSource from './EventUtils';
 const { ccclass, property } = _decorator;
 
@@ -50,6 +50,7 @@ export const listDemons: Demo[] = [
     { name: "天空盒代码加载", scene: "SkyBox4" },
     { name: "立方体贴图", scene: "CubeMap" },
     { name: "精灵帧动画", scene: "SpriteAnimation" },
+    { name: "事件-冒泡", scene: "TouchBubble" },
     //https://docs.cocos.com/creator/manual/zh/ui-system/components/engine/widget-align.html
     { name: "UI-Widget", scene: "UiWidget" },
     //https://docs.cocos.com/creator/manual/zh/ui-system/components/engine/sliced-sprite.html
