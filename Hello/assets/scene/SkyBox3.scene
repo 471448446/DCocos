@@ -29,7 +29,7 @@
     "_active": true,
     "_components": [],
     "_prefab": {
-      "__id__": 25
+      "__id__": 26
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -60,7 +60,7 @@
     },
     "autoReleaseAssets": false,
     "_globals": {
-      "__id__": 26
+      "__id__": 27
     },
     "_id": "6e1db295-8f00-4181-9ad2-1f6f428fc23e"
   },
@@ -273,9 +273,6 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 21
-      },
-      {
         "__id__": 22
       },
       {
@@ -283,6 +280,9 @@
       },
       {
         "__id__": 24
+      },
+      {
+        "__id__": 25
       }
     ],
     "_prefab": null,
@@ -560,6 +560,9 @@
       },
       {
         "__id__": 20
+      },
+      {
+        "__id__": 21
       }
     ],
     "removedComponents": []
@@ -625,6 +628,16 @@
       "y": 0,
       "z": 0
     }
+  },
+  {
+    "__type__": "CCPropertyOverrideInfo",
+    "targetInfo": {
+      "__id__": 17
+    },
+    "propertyPath": [
+      "_active"
+    ],
+    "value": false
   },
   {
     "__type__": "cc.UITransform",
@@ -708,6 +721,7 @@
       "__id__": 6
     },
     "sensitivity": 0.1,
+    "focusSceneCenter": true,
     "_id": "dcDsayLcxFEYsoPsr/DPEm"
   },
   {
@@ -726,28 +740,28 @@
   {
     "__type__": "cc.SceneGlobals",
     "ambient": {
-      "__id__": 27
-    },
-    "shadows": {
       "__id__": 28
     },
-    "_skybox": {
+    "shadows": {
       "__id__": 29
     },
-    "fog": {
+    "_skybox": {
       "__id__": 30
     },
-    "octree": {
+    "fog": {
       "__id__": 31
     },
-    "skin": {
+    "octree": {
       "__id__": 32
     },
-    "lightProbeInfo": {
+    "skin": {
       "__id__": 33
     },
-    "postSettings": {
+    "lightProbeInfo": {
       "__id__": 34
+    },
+    "postSettings": {
+      "__id__": 35
     },
     "bakedWithStationaryMainLight": false,
     "bakedWithHighpLightmap": false

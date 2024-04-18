@@ -1,9 +1,8 @@
-import { _decorator, Component, EventTouch, Input, Node } from 'cc';
+import { _decorator, Component, director, EventTouch, Input, Node } from 'cc';
 const { ccclass, property } = _decorator;
 /**
- * 演示父子节点之间的事件冒泡
- * 以及事件停止冒泡
- * B2(黄色)、C2支持停止冒泡
+ * 演示节点重合时，事件的归属问题
+ * B2(黄色)和B（绿色）都是A（大背景）的子节点，他们是同级节点，如果重合，事件会先从或绘制的节点上开始分发，先从最上层的分发。
  */
 @ccclass('TouchBubble')
 export class TouchBubble extends Component {
@@ -32,7 +31,6 @@ export class TouchBubble extends Component {
         this.nodeB2.on(Input.EventType.TOUCH_START, this.touchB2, this)
         this.nodeC2.on(Input.EventType.TOUCH_START, this.touchC2, this)
     }
-    
     protected onDisable(): void {
         this.nodeA.off(Input.EventType.TOUCH_START, this.touchA, this)
         this.nodeB.off(Input.EventType.TOUCH_START, this.touchB, this)
@@ -55,12 +53,9 @@ export class TouchBubble extends Component {
         console.log("C touch" + ev.getLocation());
     }
     private touchB2(ev: EventTouch) {
-        // 阻止事件冒泡
-        ev.propagationStopped = true;
         console.log("B2 touch" + ev.getLocation());
     }
     private touchC2(ev: EventTouch) {
-        ev.propagationStopped = true;
         console.log("C2 touch" + ev.getLocation());
     }
 }

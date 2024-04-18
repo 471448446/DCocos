@@ -1,4 +1,4 @@
-import { _decorator, Camera, CCBoolean, CCFloat, Component, director, EventTouch, Input, Node, Quat, UITransform, v2, v3, Vec3 } from 'cc';
+import { _decorator, Camera, CCBoolean, CCFloat, Component, director, EventTouch, input, Input, Node, Quat, UITransform, v2, v3, Vec3 } from 'cc';
 const { ccclass, property } = _decorator;
 
 /**
@@ -25,7 +25,10 @@ export class SkyBoxRotation extends Component {
     cameraParentNode: Node = null;
 
     start() {
-        this.node.on(Input.EventType.TOUCH_MOVE, this.onMove, this);
+        /**
+         * 这里之前是当前节点监听事件，然后和常驻节点的点击有点冲突
+         */
+        input.on(Input.EventType.TOUCH_MOVE, this.onMove, this);
         // 先获取当前相机的旋转角度
         this.main3DCamera.node.getRotation(this.rotationQuatCamera);
         // 将场景中所有物体的anchor属性设置为（0.5，0.5）
@@ -52,7 +55,7 @@ export class SkyBoxRotation extends Component {
         }
     }
     protected onDestroy(): void {
-        this.node.off(Input.EventType.TOUCH_MOVE, this.onMove, this);
+        input.off(Input.EventType.TOUCH_MOVE, this.onMove, this);
     }
 
     update(deltaTime: number) {

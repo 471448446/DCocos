@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.SceneAsset",
-    "_name": "TouchBubble",
+    "_name": "TouchTarget",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_native": "",
@@ -11,7 +11,7 @@
   },
   {
     "__type__": "cc.Scene",
-    "_name": "TouchBubble",
+    "_name": "TouchTarget",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": null,
@@ -54,7 +54,7 @@
     "_globals": {
       "__id__": 31
     },
-    "_id": "b47090e5-31c8-4091-964b-02aac4c43fea"
+    "_id": "19f1ddf9-499d-4e82-bdaf-070168b226c1"
   },
   {
     "__type__": "cc.Node",
@@ -552,8 +552,8 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 0,
-      "y": -565,
+      "x": 80,
+      "y": 80,
       "z": 0
     },
     "_lrot": {
@@ -759,14 +759,14 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "_alignFlags": 44,
+    "_alignFlags": 18,
     "_target": null,
-    "_left": 285,
-    "_right": 285,
+    "_left": 310,
+    "_right": 310,
     "_top": 565,
     "_bottom": 0,
-    "_horizontalCenter": 0,
-    "_verticalCenter": 0,
+    "_horizontalCenter": 80,
+    "_verticalCenter": 80,
     "_isAbsLeft": true,
     "_isAbsRight": true,
     "_isAbsTop": true,
@@ -871,7 +871,7 @@
     "_id": "88wHbV8sVMILKyFw+iKxY5"
   },
   {
-    "__type__": "c9501VuHatKyIgHvMelPW2L",
+    "__type__": "7b6c1bGpUJL/qssUEZEky3+",
     "_name": "",
     "_objFlags": 0,
     "__editorExtras__": {},
@@ -895,7 +895,7 @@
     "nodeC2": {
       "__id__": 14
     },
-    "_id": "22omvLvhBHsb36Z35eqkNw"
+    "_id": "5c20qdZehMN4lVg9L93uSj"
   },
   {
     "__type__": "cc.Node",

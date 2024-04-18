@@ -1,9 +1,14 @@
-import { _decorator, Component, director, game, Label, Node } from 'cc';
+import { _decorator, Component, director, game, Input, Label, Node } from 'cc';
 import { Demo, listDemons } from './MainCtl';
 import eventSource from './EventUtils';
 const { ccclass, property } = _decorator;
 
 /**
+ * 注意：
+ * 这里在设计常驻节点的时候，没有将主页面的第一个demo放进来。
+ * 所以点击第一个demo的时候，是无法看到常驻节点的。并不是bug，是设计上的bug。
+ * 同时天空盒几个demo因为设置了拖拽事件，所以无法响应点击
+ * 
  * 常驻节点使用注意事项
 1、目标节点必须为位于层级的根节点，否则设置无效
 2、常驻节点是全局存在的，因此在使用时要注意避免滥用，合理规划和管理节点的数量和功能
@@ -46,6 +51,7 @@ export class NavRoot extends Component {
     private sceneName: string = "";
 
     start() {
+        // this.node.zOrder = 100;
         // 导航节点常驻
         director.addPersistRootNode(this.node);
         this.titleLable = this.titleNode.getComponent(Label);
@@ -55,13 +61,17 @@ export class NavRoot extends Component {
     }
 
     protected onEnable(): void {
-        console.log("导航栏 onEnable");
+        console.log("导航栏 onEnable() isPersistRootNode:" + director.isPersistRootNode(this.node));
         console.log(director.getScene());
         this.updateSceneInfo(this.sceneIndex, this.sceneName);
+        this.preNode.on(Input.EventType.TOUCH_START, this.onClickPre, this);
+        this.nextNode.on(Input.EventType.TOUCH_START, this.onClickNext, this);
     }
-    
+
     protected onDisable(): void {
-        console.log("导航栏 onDisable");
+        console.log("导航栏 onDisable() isPersistRootNode:" + director.isPersistRootNode(this.node));
+        this.preNode.off(Input.EventType.TOUCH_START, this.onClickPre, this);
+        this.nextNode.off(Input.EventType.TOUCH_START, this.onClickNext, this);
     }
 
     update(deltaTime: number) {
@@ -73,7 +83,7 @@ export class NavRoot extends Component {
         director.loadScene("Main");
     }
 
-    onClickPre() {
+    onClickPre(ev: MouseEvent) {
         console.log("当前:" + this.sceneIndex + "上一个场景");
         const pre = this.sceneIndex - 1;
         if (pre <= 0) {
@@ -84,7 +94,7 @@ export class NavRoot extends Component {
         director.loadScene(demo.scene);
     }
 
-    onClickNext() {
+    onClickNext(ev: MouseEvent) {
         console.log("当前:" + this.sceneIndex + "下一个场景");
         const next = this.sceneIndex + 1;
         if (next >= listDemons.length) {
@@ -114,7 +124,6 @@ export class NavRoot extends Component {
         this.preNode.active = notHomeScene;
         this.nextNode.active = notHomeScene;
         this.exitNode.active = notHomeScene;
-        console.log("导航栏可见？" + notHomeScene);
     }
 }
 

@@ -51,6 +51,7 @@ export const listDemons: Demo[] = [
     { name: "立方体贴图", scene: "CubeMap" },
     { name: "精灵帧动画", scene: "SpriteAnimation" },
     { name: "事件-冒泡", scene: "TouchBubble" },
+    { name: "事件-归属", scene: "TouchTarget" },
     //https://docs.cocos.com/creator/manual/zh/ui-system/components/engine/widget-align.html
     { name: "UI-Widget", scene: "UiWidget" },
     //https://docs.cocos.com/creator/manual/zh/ui-system/components/engine/sliced-sprite.html

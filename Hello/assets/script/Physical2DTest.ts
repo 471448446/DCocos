@@ -10,7 +10,8 @@ export class Physical2DTest extends Component {
 
 
     start() {
-        director.getPersistRootNode()
+        // 方法失效
+        // director.getPersistRootNode()
     }
 
     update(deltaTime: number) {
